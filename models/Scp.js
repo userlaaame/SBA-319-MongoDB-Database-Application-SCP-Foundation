@@ -44,6 +44,8 @@ const scpSchema = new mongoose.Schema({
 );
 
 //I want all Keter-class anomalies as the canonical filter for the app and to be indexed
-scpSchema.index({ objectClass: 1 });
+// Compound index: serves queries on series alone, or series + objectClass
+// together (index prefix rule)
+scpSchema.index({ series: 1, objectClass: 1 });
 
 export default mongoose.model('Scp', scpSchema);
