@@ -112,7 +112,7 @@ The `scps` collection's `$jsonSchema` validator, shown in MongoDB Compass:
 → `400` with the enum's custom message. `POST /scps` reusing an existing `itemNumber`
 → `409` from the database's unique index.
 
-## Development Notes — tricky parts and lessons learned
+## Development Notes - tricky parts and lessons learned
 
 **npm scripts live inside `"scripts"`.** I added `"validate:db"` as a top-level
 `package.json` property and got `Missing script` npm ignores unknown top-level keys
