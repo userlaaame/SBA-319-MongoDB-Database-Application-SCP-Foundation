@@ -13,6 +13,13 @@ router.get('/', async (req, res) => {
     res.json(scps);
 });
 
+//GET /scp/:id forgot this one
+router.get('/:id', async (req, res) => {
+    const scp = await Scp.findById(req.params.id);
+    if (!scp) return res.status(404).json({ error: 'SCP not found in database' });
+    res.json(scp);
+});
+
 //POST /scps Mongoose validators run automatically on create hopefully
 router.post('/', async (req, res) => {
     const scp = await Scp.create(req.body);
@@ -26,7 +33,7 @@ router.patch('/:id', async (req, res) => {
         runValidators: true, 
     });
     if (!scp) return res.status(404).json({ error: 'SCP not found in database' });
-    res.json(scp);//404 = a malformed id
+    res.json(scp);//404 = well-formed id
 });
 
 //DELETE /scps/:id

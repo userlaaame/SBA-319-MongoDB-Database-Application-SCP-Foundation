@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
     }
     //for invalid ObjectId in :id param
     if (err.name === 'CastError') {
-        return res.status(400).json({ error: `Invalid ${err.patch}: ${err.value}` });
+        return res.status(400).json({ error: `Invalid ${err.path}: ${err.value}` });//typo error here with err.path
     } 
     //for Duplicate keys and handling unique index
     //400 = you sent bad data, 409 = conflict with existing data, 500 = our fault

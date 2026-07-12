@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     if (req.query.scp) filter.scp = req.query.scp;
 
     const incidents = await IncidentReport.find(filter)
-        .sort({ occuredAt: -1 })
+        .sort({ occurredAt: -1 })//silent fail issue, typo
         .populate('scp', 'itemNumber title objectClass')//same principle as $project
         .populate('reportedBy', 'name designation site');
     res.json(incidents);

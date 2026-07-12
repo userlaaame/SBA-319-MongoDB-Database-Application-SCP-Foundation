@@ -1,5 +1,6 @@
 import express from 'express';
 import Personnel from '../models/Personnel.js';
+import Scp from '../models/Scp.js';
 
 const router = express.Router();
 
@@ -12,8 +13,15 @@ router.get('/', async (req, res) => {
     if (req.query.minClearance) filter.clearanceLevel = { $gte: Number(req.query.minClearance) };
     if (req.query.active !== undefined) filter.active = req.query.active === 'true';//this one is tough...
 
-    const personnel = (await Personnel.find(filter)).toSorted({ clearanceLevel: -1});
-    res.json(personnel);
+    const personnel = (await Personnel.find(filter)).sort({ clearanceLevel: -1 });
+    res.json(personnel);//await Personnel should resolve first giving me an array then .sort calls it with an object
+});
+
+//GET /personnel/:id ---- forgot this one too, for handling Casterrors
+router.get('/:id', async (req, res) => {
+    const person = await Personnel.findById(req.params.id);
+    if (!person) return res.status(404).json({ error: 'Personnel record not found' });
+    res.json(person);
 });
 
 // POST /personnel
@@ -34,9 +42,9 @@ router.patch('/:id', async (req, res) => {
 
 // DELETE /personnel/:id
 router.delete('/:id', async (req, res) => {
-  const person = await Personnel.findByIdAndDelete(req.params.id);
-  if (!person) return res.status(404).json({ error: 'Personnel record not found' });
-  res.json({ message: `${person.name} removed from active roster`, deleted: person });
+    const person = await Personnel.findByIdAndDelete(req.params.id);
+    if (!person) return res.status(404).json({ error: 'Personnel record not found' });
+    res.json({ message: `${person.name} removed from active roster`, deleted: person });
 });
 
 export default router;
