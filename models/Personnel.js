@@ -30,7 +30,7 @@ const personnelSchema = new mongoose.Schema({
 { timestamps: true }
 );
 
-//A normal lookup shoul roster by site, and sort by clearance in descending order
+//A normal lookup should roster by site, and sort by clearance in descending order
 personnelSchema.index({ site: 1, clearanceLevel: -1 });
 
 export default mongoose.model('Personnel', personnelSchema);
