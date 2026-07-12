@@ -2,12 +2,13 @@
   "name": "sba-319---mongodb-database",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "seed": "node seed.js"
+    "seed": "node seed.js",
+    "validate:db": "node scripts/applyDbValidation.js"
   },
   "keywords": [],
   "author": "",

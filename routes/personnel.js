@@ -1,6 +1,5 @@
 import express from 'express';
 import Personnel from '../models/Personnel.js';
-import Scp from '../models/Scp.js';
 
 const router = express.Router();
 
@@ -13,8 +12,8 @@ router.get('/', async (req, res) => {
     if (req.query.minClearance) filter.clearanceLevel = { $gte: Number(req.query.minClearance) };
     if (req.query.active !== undefined) filter.active = req.query.active === 'true';//this one is tough...
 
-    const personnel = (await Personnel.find(filter)).sort({ clearanceLevel: -1 });
-    res.json(personnel);//await Personnel should resolve first giving me an array then .sort calls it with an object
+    const personnel = await Personnel.find(filter).sort({ clearanceLevel: -1 });
+    res.json(personnel);//bad approach b4, now sort() chains onto the query before await executes, let mongo do the sorting
 });
 
 //GET /personnel/:id ---- forgot this one too, for handling Casterrors
